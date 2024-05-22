@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 class PuntuacionSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the databaseeeeeeeeeeeee seeds.
      */
     public function run(): void
     {
