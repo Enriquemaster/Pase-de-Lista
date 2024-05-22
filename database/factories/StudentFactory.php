@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Student;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
@@ -18,9 +17,9 @@ class StudentFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('password'),
-            'rol_id' => $this->faker->numberBetween(1, 2),
+            'user_id'=>User::class,
+            'matricula' => $this->faker->numberBetween(2007005, 200745),
+            'estadoStudent' =>fake()->randomElement(['No Activo', 'Activo' ]),
         ];
     }
 }

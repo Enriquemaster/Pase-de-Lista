@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Teacher;
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
@@ -17,9 +17,9 @@ class TeacherFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => $this->faker->unique()->safeEmail,
-            'password' => bcrypt('password'),
-            'rol_id' => $this->faker->numberBetween(1, 2),
+            'user_id'=>User::class,
+            'academia' =>fake()->randomElement(['TecMotul', 'Tecnológico de software']),
+            'estadoTeacher' =>fake()->randomElement(['No Activo', 'Activo']),
         ];
     }
 }

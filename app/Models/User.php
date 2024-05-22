@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 
 class User extends Authenticatable
@@ -61,4 +63,32 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    //Para ejecutar el seeder en users
+    public function clases(): hasMany
+    {
+        return $this->hasMany(Clase::class);
+    }
+
+     //Para ejecutar el seeder en users
+     public function students(): hasMany
+     {
+         return $this->hasMany(Student::class);
+     }
+
+     //Para ejecutar el seeder en users
+     public function teachers(): hasMany
+     {
+         return $this->hasMany(Teacher::class);
+     }
+
+      //Para ejecutar el seeder en users
+      public function attendances(): hasMany
+      {
+          return $this->hasMany(Attendance::class);
+      }
+
+
 }
+
+

@@ -1,9 +1,12 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivarController;
 use App\Http\Controllers\MaestroController;
-
+use App\Http\Controllers\VerAsistencia;
+use App\Http\Controllers\PaseDeListaController;
+use App\Http\Livewire\BtnEliminar;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,14 +40,24 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+
+
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
 
+    Route::get('/puntuacion', function () {
+        return view('puntuacion');
+    })->name('puntuacion'); 
+
+    Route::get('/PaseLista', function () {
+        return view('PaseLista');
+    })->name('PaseLista'); 
    
 
-
+Route::get('/attendances', [VerAsistencia::class, 'index'])->name('attendances');
 Route::get('/Activar_convivio', [ActivarController::class, 'activar'])->name('Activar_convivio');
 Route::get('/Activar_convivio1', [ActivarController::class, 'activar1'])->name('Activar_convivio1');
 Route::get('/Activar_convivio2', [ActivarController::class, 'activar2'])->name('Activar_convivio2');
@@ -52,10 +65,23 @@ Route::get('/Activar_convivio3', [ActivarController::class, 'activar3'])->name('
 Route::get('/Activar_convivio4', [ActivarController::class, 'activar4'])->name('Activar_convivio4');
 
 
+Route::get('/PaseLista', [PaseDeListaController::class, 'index'])->name('PaseLista');
+Route::post('/registrar-asistencia', [PaseDeListaController::class, 'registrar'])->name('registrar.asistencia');
+
+
 
 Route::get('/Crear_convivio', function () {
     return view('Crear_convivio');
 })->name('Crear_convivio'); 
+
+Route::get('/VerClase', function () {
+    return view('VerClase');
+})->name('VerClase'); 
+
+
+Route::get('/VerAlumnos', function () {
+    return view('VerAlumnos');
+})->name('VerAlumnos'); 
 
 
 Route::get('/Mostrar_puntuacion', function () {

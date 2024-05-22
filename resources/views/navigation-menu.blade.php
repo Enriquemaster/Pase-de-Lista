@@ -10,12 +10,21 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Dashboard -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                @role('Maestro')
+                  <!-- crear clase solo para rol maestro-->
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('clase') }}" :active="request()->routeIs('clase')">
+                        {{ __('Crear Clase') }}
+                    </x-nav-link>
+                </div>
+                @endrole
+
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

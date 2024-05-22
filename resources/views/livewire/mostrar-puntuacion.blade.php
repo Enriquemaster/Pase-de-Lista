@@ -9,6 +9,12 @@
 <h1 class="text-5xl lg:text-6xl font-extrabold text-transparent bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text h-24 text-center">Tu Ranking Actual</h1>
     <h2 class="text-sm font-bold mb-8">(Esto es una prueba ya que el nombre que aparece debe ser el tuyo siempre)</h2>
    
+   
+    <div class="flex justify-center mb-4">
+    <livewire:borrar-puntuacion :id="$puntuacion->id" />
+</div>
+
+   
     <table class="min-w-1/2 bg-white divide-y divide-gray-200">
         <thead class="bg-gray-50">
             <tr>

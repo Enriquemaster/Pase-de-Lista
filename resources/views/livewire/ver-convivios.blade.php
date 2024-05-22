@@ -1,5 +1,9 @@
-<script src="https://cdn.tailwindcss.com"></script> 
+
 <div class="py-12">
+
+<script src="https://cdn.tailwindcss.com"></script> 
+
+
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 <div class="flex flex-col justify-center items-center  bg-gray-200 sm:py-8">
