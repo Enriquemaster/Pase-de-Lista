@@ -28,6 +28,7 @@
                             <form action="{{ route('registrar.asistencia') }}" method="POST">
                                  @csrf
                                 <!-- Agrega aquí cualquier campo adicional necesario -->
+                                <input type="hidden" name="student_id" value="{{ $student['student_id'] }}">
                                 <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
                                  Pasar Lista
                                 </button>
@@ -40,6 +41,7 @@
                              </button>
                           </td>
                     </tr>
+                    
                 @endforeach
             </tbody>
         </table>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AttendanceStudent;
+use App\Models\Student;
 use App\Models\Attendance;
 use App\Models\Clase;
 use Carbon\Carbon;
@@ -38,6 +39,7 @@ class PaseDeListaController extends Controller
            
         
         return [
+            'student_id' => $student->id,
             'student_matricula' => $student->matricula,
             'user_name' => $userName,
             'asistencia' => $record->asistencia,
@@ -58,30 +60,63 @@ class PaseDeListaController extends Controller
 
 
 //////////////////////////////////////////////////////////////////////////////////////
-    public function registrar()
+    public function registrar(Request $request)
 {
  // Obtener la fecha de hoy
  $fechaHoy = Carbon::now()->toDateString();
-    
+
+  // Obtener el ID del estudiante del formulario
+  $studentId = $request->input('student_id');
+
+ // Verificar si ya existe un registro en Attendance con la fecha de hoy
+ //$attendanceExistente = Attendance::where('fecha_clase', $fechaHoy)->first();
+
+ // Si ya existe un registro con la fecha de hoy, mostrar un mensaje de error
+// if ($attendanceExistente) {
+    // $mensajefallo = 'Error, ya existe un registro de asistencia para la fecha de hoy.';
+    // return view('msjFallo', ['mensajefallo' => $mensajefallo]);
+ //}
+
+
+
  // Crear un registro en el modelo Attendance
  $attendance = Attendance::create([
      'fecha_clase' => $fechaHoy,
-     'tema' => 'Asistencia para la clase con ID 2', // Tema relacionado con la clase 1
+     'tema' => 'Asistencia para la clase de calculo', // Tema relacionado con la clase 1
      'clase_id' => 2, // ID de la clase asociada
  ]);
+ 
+    // Obtener el ID del estudiante del formulario
+    $studentId = $request->input('student_id');
 
-// Crear un registro en el modelo AttendanceStudent para asociar la asistencia al estudiante
-AttendanceStudent::create([
+    // Buscar al estudiante por su ID
+    $student = Student::findOrFail($studentId);
+
+    // Cargar el estudiante con el usuario relacionado
+    $student = Student::with('user')->findOrFail($studentId);
+    
+     // Cargar el estudiante con el usuario relacionado
+     $student = $student->load('user');
+    
+
+ // Crear un nuevo registro en el modelo AttendanceStudent
+ $attendanceStudent = AttendanceStudent::create([
     'attendances_id' => $attendance->id,
-    'student_id' => $student_id,
-    'asistencia' => "Presente",
-    'observaciones' => "Se presento en clases",
-
-
+    'student_id' => $student->id, 
+    'asistencia' => 'presente', // Opcional: Cambiar según la lógica de tu aplicación
+    'observaciones' => 'Observaciones adicionales aquí', // Opcional: Obtener las observaciones del formulario
 ]);
 
- // Puedes devolver algún mensaje de éxito si lo deseas
- return 'Asistencia registrada correctamente.';
+$mensaje = 'Asistencia registrada correctamente para el estudiante con la matricula ';
+if ($student->user) {
+    $mensaje .= $student->matricula;
+} else {
+    $mensaje .= 'sin nombre de usuario';
+}
+
+        // Pasar el mensaje a la vista
+        return view('msjExito', ['mensaje' => $mensaje,]);
+
 }
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

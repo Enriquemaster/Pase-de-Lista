@@ -8,9 +8,9 @@ use App\Http\Requests\UpdateClaseStudentRequest;
 
 class ClaseStudentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use HasFactory;
+
+
     public function index()
     {
         //

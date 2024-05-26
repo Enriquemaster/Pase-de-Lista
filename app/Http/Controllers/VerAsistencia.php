@@ -36,6 +36,7 @@ class VerAsistencia extends Controller
            
         
         return [
+            
             'student_matricula' => $student->matricula,
             'user_name' => $userName,
             'asistencia' => $record->asistencia,
