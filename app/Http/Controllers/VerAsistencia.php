@@ -36,7 +36,7 @@ class VerAsistencia extends Controller
            
         
         return [
-            
+            'student_id' => $student->id,
             'student_matricula' => $student->matricula,
             'user_name' => $userName,
             'asistencia' => $record->asistencia,
@@ -45,13 +45,54 @@ class VerAsistencia extends Controller
         ];
     });
 
-    $fechasClase = Attendance::orderBy('fecha_clase', 'asc')->pluck('fecha_clase');
-   
+   $fechasClase = Attendance::where('clase_id', 2)->orderBy('fecha_clase', 'asc')->pluck('fecha_clase');
+
    
     //dd($attendanceStudents);
 
     // Retorna una vista pasando los datos
     return view('attendances', ['data' => $dataCollection, 'fechasClase' => $fechasClase, 'claseNombre' => $claseNombre, 'nombre_usuario' => $nombre_usuario]);
    
+    }
+
+
+
+
+    public function Asistencia()
+    {
+       // Definir la clase_id que queremos buscar
+    $claseId = 2;
+
+    // Obtener las asistencias de los estudiantes para la clase con id 2 desde el modelo Attendance
+  // Obtener las fechas de clase para la clase con ID 2
+  $fechasClase = Attendance::where('clase_id', $claseId)->pluck('fecha_clase')->unique();
+
+  $studentsPorFecha = [];
+
+  foreach ($fechasClase as $fecha) {
+      $attendance = Attendance::where('clase_id', $claseId)->where('fecha_clase', $fecha)->first();
+      
+       // Verificar si se encontró una asistencia para la fecha actual
+       if ($attendance) {
+        // Obtener el ID de la asistencia
+        $attendanceId = $attendance->id;
+
+        // Buscar los IDs de los estudiantes asociados a esta asistencia en AttendanceStudent
+        $studentIds = AttendanceStudent::where('attendances_id', $attendanceId)->pluck('student_id');
+
+        // Almacenar los IDs de estudiantes en el array $studentsPorFecha
+        $studentsPorFecha[$fecha] = $studentIds->toArray();
+
+    } else {
+        // En caso de no encontrar asistencia, aseguramos una entrada vacía
+        $studentsPorFecha[$fecha] = [];
+
+    }
+}
+
+// Retornar la vista con los datos
+return view('attendances')->with('fechasClase', $fechasClase)
+                           ->with('studentsPorFecha', $studentsPorFecha);
+
     }
 }

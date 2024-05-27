@@ -27,5 +27,7 @@ class Attendance extends Model
     }
     
 
+
+
     protected $fillable = ['fecha_clase', 'tema', 'clase_id'];
 }

@@ -45,21 +45,23 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Matrícula del Estudiante</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">asistencias</th>
                     @foreach ($fechasClase as $fechaClase)
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $fechaClase }}</th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{{ $fechaClase }}  <input type="hidden" name="student_id" value="{{ $fechaClase }}"></th>
                      @endforeach
         </tr>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @foreach ($data as $student)
+              
+                <tr>
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $student['student_matricula'] }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $student['user_name'] }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $student['asistencia'] }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $student['asistencia'] }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ $student['asistencia'] }}</td>
-                    </tr>
+                   
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $student['student_matricula'] }} </td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{ $student['user_name'] }}  <input type="hidden" name="student_id" value="{{ $student['student_id'] }}"> </td>
+               
+
                 @endforeach
+        
             </tbody>
         </table>
     </div>
